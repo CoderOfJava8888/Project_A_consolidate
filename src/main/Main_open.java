@@ -52,25 +52,28 @@ public class Main_open {
         // In a production application, it would be best to wait for callbacks to confirm the connection is complete
         Thread.sleep(1000);
 
-        LiveContract liveContract_01 = new LiveContract(Contracts_202212_DEC.AUD_FXFutureContract(), "AUD", 299701779, 3383.00, 2707.00, 33.00, 22.00, 3004, 19004);
-        LiveContract liveContract_02 = new LiveContract(Contracts_202212_DEC.CHF_FXFutureContract(), "CHF", 299701893, 4825.00, 3860.00, 36.00, 28.00, 3008, 19008);
-        LiveContract liveContract_03 = new LiveContract(Contracts_202212_DEC.EUR_FXFutureContract(), "EUR", 299701833, 4637.00, 3710.00, 36.00, 28.00, 3007, 19007);
-        LiveContract liveContract_04 = new LiveContract(Contracts_202212_DEC.GBP_FXFutureContract(), "GBP", 299701782, 4404.00, 3524.00, 41.00, 30.00, 3006, 19006);
-        LiveContract liveContract_05 = new LiveContract(Contracts_202212_DEC.JPY_FXFutureContract(), "JPY", 299701836, 3438.00, 2751.00, 30.00, 22.00, 3005, 19005);
-
+        LiveContract liveContract_00 = new LiveContract(Contracts_202303_MAR.AUD_FXFutureContract(), "AUD", 310735312, 2800.00, 2240.00, 27.00, 22.00, 3002, 19002);
+        LiveContract liveContract_01 = new LiveContract(Contracts_202303_MAR.CHF_FXFutureContract(), "CHF", 310735327, 5110.00, 4088.00, 45.00, 40.00, 3006, 19006);
+        LiveContract liveContract_02 = new LiveContract(Contracts_202303_MAR.EUR_FXFutureContract(), "EUR", 310735266, 5454.00, 4363.00, 47.00, 42.00, 3008, 19008);
+        LiveContract liveContract_03 = new LiveContract(Contracts_202303_MAR.GBP_FXFutureContract(), "GBP", 310735351, 5384.00, 4308.00, 47.00, 42.00, 3007, 19007);
+        LiveContract liveContract_04 = new LiveContract(Contracts_202303_MAR.JPY_FXFutureContract(), "JPY", 310735300, 4110.00, 3288.00, 37.00, 32.00, 3005, 19005);
+                
+        
         Map<String, LiveContract> portfolioVault = new HashMap<>();
-        portfolioVault.put("AUD", liveContract_01);
-        portfolioVault.put("CHF", liveContract_02);
-        portfolioVault.put("EUR", liveContract_03);
-        portfolioVault.put("GBP", liveContract_04);
-        portfolioVault.put("JPY", liveContract_05);
-
-        ArrayList<LiveContract> activeContracts = new ArrayList<>();
-        activeContracts.add(portfolioVault.put("AUD", liveContract_01));
-        activeContracts.add(portfolioVault.put("CHF", liveContract_02));
-        activeContracts.add(portfolioVault.put("EUR", liveContract_03));
-        activeContracts.add(portfolioVault.put("GBP", liveContract_04));
-        activeContracts.add(portfolioVault.put("JPY", liveContract_05));
+        portfolioVault.put("AUD", liveContract_00);
+        portfolioVault.put("CHF", liveContract_01);
+        portfolioVault.put("EUR", liveContract_02);
+        portfolioVault.put("GBP", liveContract_03);
+        portfolioVault.put("JPY", liveContract_04);
+        
+        
+        
+                ArrayList<LiveContract> activeContracts = new ArrayList<>();
+        activeContracts.add(portfolioVault.put("AUD", liveContract_00));
+        activeContracts.add(portfolioVault.put("CHF", liveContract_01));
+        activeContracts.add(portfolioVault.put("EUR", liveContract_02));
+        activeContracts.add(portfolioVault.put("GBP", liveContract_03));
+        activeContracts.add(portfolioVault.put("JPY", liveContract_04));
 
         OrderPlacer OOP = new OrderPlacer(wrapper.getClient(), wrapper.getCurrentOrderId());
 

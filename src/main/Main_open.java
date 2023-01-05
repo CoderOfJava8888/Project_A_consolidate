@@ -20,7 +20,7 @@ public class Main_open {
         EWrapper_Implementation wrapper = new EWrapper_Implementation();
         NewStrategy newStrategy = new NewStrategy();
         Portfolio_Assessment portfolioAssessment = new Portfolio_Assessment();
-        Position_Processor positions = new Position_Processor();       //  methods marginQtyEnforcer, ZeroPositionDiscloser, PositionDiscloser, posArrayProcessor
+        Position_Processor positions = new Position_Processor();       //  methods marginQtyEnforcer, ZeroPositionDiscloser, PositionDiscloser, posArrayProcessor, TotalAbsPositions_Discloser
 
         final EClientSocket m_client = wrapper.getClient();
         final EReaderSignal m_signal = wrapper.getSignal();

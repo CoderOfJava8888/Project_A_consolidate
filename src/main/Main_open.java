@@ -106,7 +106,9 @@ public class Main_open {
 
             TimeUnit.SECONDS.sleep(3);
 
-            if (wrapper.getHashMap_UpdatePortfolio().isEmpty() && wrapper.getPositions().isEmpty()) {
+            if (wrapper.getHashMap_UpdatePortfolio().size() != 0 || wrapper.getPositions().isEmpty()) {
+
+                if (positions.TotalAbsPositions_Discloser(wrapper.getPositions()) == 0.00) {
 
                 System.out.println("BOTH Portfolio and Positions are empty or null ==>Positons  size:  " + wrapper.getPositions().size());
                 System.out.println("BOTH Portfolio and Positions are empty or null ==>Portfolio size:  " + wrapper.getHashMap_UpdatePortfolio().size());
@@ -135,6 +137,7 @@ public class Main_open {
 
                     TimeUnit.SECONDS.sleep(5);
                 }
+            }
             }
 ////    //********************************************************************************************************   
             /*Here at this point, we assume full capacity meaning 5 contracts are open--so we assess if unRealizedPNL meets our criteria for closing position.*/

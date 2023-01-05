@@ -111,4 +111,15 @@ toOpenQty.clear();
 
 
 
+    public double TotalAbsPositions_Discloser(HashMap<String, Double> incomingTreeMap) {
+
+        double TotalAbsPositions = incomingTreeMap.values().stream()
+                     .mapToDouble(w -> Math.abs(w))
+                     .sum();
+
+    return TotalAbsPositions;
+}
+
+
+
 }

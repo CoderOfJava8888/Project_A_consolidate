@@ -24,7 +24,7 @@ public class NewStrategy {
         if (min >= 58 && min <= 59) {
             minute = 0;
         }
-        if (min >= 19 && min <= 33) {
+        if (min >= 19 && min <= 22) {
             minute = 20;
         }
         if (min >= 39 && min <= 42) {

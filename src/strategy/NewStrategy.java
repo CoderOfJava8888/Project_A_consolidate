@@ -15,7 +15,7 @@ public class NewStrategy {
     int b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12;
     int minute = 0;
 
-    public String executionDeterminer(ArrayList<Bar> barInput) throws InterruptedException {  // throws InterruptedException {
+    public String executionDeterminer(String currentSymbolFUT, ArrayList<Bar> barInput) throws InterruptedException {  // throws InterruptedException {
         Instant instant = Instant.now();
         int min = instant.atZone(ZoneOffset.UTC).getMinute();
         if (min >= 0 && min <= 2) {
@@ -24,12 +24,13 @@ public class NewStrategy {
         if (min >= 58 && min <= 59) {
             minute = 0;
         }
-        if (min >= 19 && min <= 22) {
+        if (min >= 19 && min <= 33) {
             minute = 20;
         }
         if (min >= 39 && min <= 42) {
             minute = 40;
         }
+
 
         System.out.println("min =   " + min + "    Minute " + minute);
 
@@ -88,7 +89,7 @@ public class NewStrategy {
             System.out.println("tesla6  " + tesla6);
             System.out.println("tesla9  " + tesla9);
             System.out.println("signal  " + signalDecision);
-           
+
 //        LiveBarPriorClassification test = new LiveBarPriorClassification(barInput.get(12).volume(), barInput.get(12).count(), barInput.get(12).wap(), tesla3, tesla6, tesla9, signalDecision);
 //TEMPORARY -         
             
@@ -99,7 +100,7 @@ public class NewStrategy {
 //TEMPORARY -    ERASE/EDIT BELOW
 //  GOAL IS TO OBTAIN EXECUTE OR NO RETURN FROM MACHINE LEARNING PIECE.
         String executionOrNo = signalDecision;  //  <--- This is temporary.  Need link here to ML piece
-        barInput.clear();
+
         return executionOrNo;
 
     }

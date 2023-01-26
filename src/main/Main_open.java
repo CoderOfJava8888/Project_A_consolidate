@@ -1,4 +1,5 @@
 package main;
+
 /* Copyright (C) 2019 Interactive Brokers LLC. All rights reserved. This code is subject to the terms
  * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable.
    version98501_IBKR_Implementation
@@ -20,7 +21,7 @@ public class Main_open {
         EWrapper_Implementation wrapper = new EWrapper_Implementation();
         NewStrategy newStrategy = new NewStrategy();
         Portfolio_Assessment portfolioAssessment = new Portfolio_Assessment();
-        Position_Processor positions = new Position_Processor();       //  methods marginQtyEnforcer, ZeroPositionDiscloser, PositionDiscloser, posArrayProcessor, TotalAbsPositions_Discloser
+        Position_Processor positions = new Position_Processor();       //  methods marginQtyEnforcer, ZeroPositionDiscloser, PositionDiscloser, posArrayProcessor
 
         final EClientSocket m_client = wrapper.getClient();
         final EReaderSignal m_signal = wrapper.getSignal();
@@ -110,34 +111,34 @@ public class Main_open {
 
                 if (positions.TotalAbsPositions_Discloser(wrapper.getPositions()) == 0.00) {
 
-                System.out.println("BOTH Portfolio and Positions are empty or null ==>Positons  size:  " + wrapper.getPositions().size());
-                System.out.println("BOTH Portfolio and Positions are empty or null ==>Portfolio size:  " + wrapper.getHashMap_UpdatePortfolio().size());
-                System.out.println("BOTH Portfolio and Positions are empty or null");
-      
-                for (int cr = 0; cr < activeContracts.size(); cr++) {
-                    Contract currentContract = activeContracts.get(cr).getContract();
-                    String currentSymbolFUT = activeContracts.get(cr).getSymbol();
-                    int reqID_HistoricalData = activeContracts.get(cr).getHistData_ReqID();
-                    TimeUnit.SECONDS.sleep(3);
-                    historicalDataMainOPERATIONS(reqID_HistoricalData, wrapper.getClient(), currentContract);
-                    wrapper.getBarsHistDataArrayList();
+                    System.out.println("BOTH Portfolio and Positions are empty or null ==>Positons  size:  " + wrapper.getPositions().size());
+                    System.out.println("BOTH Portfolio and Positions are empty or null ==>Portfolio size:  " + wrapper.getHashMap_UpdatePortfolio().size());
+                    System.out.println("BOTH Portfolio and Positions are empty or null");
 
-                    newStrategy.executionDeterminer(wrapper.getBarsHistDataArrayList());
-                    String commandBs = newStrategy.executionDeterminer(wrapper.getBarsHistDataArrayList());
+                    for (int cr = 0; cr < activeContracts.size(); cr++) {
+                        Contract currentContract = activeContracts.get(cr).getContract();
+                        String currentSymbolFUT = activeContracts.get(cr).getSymbol();
+                        int reqID_HistoricalData = activeContracts.get(cr).getHistData_ReqID();
+                        TimeUnit.SECONDS.sleep(3);
+                        historicalDataMainOPERATIONS(reqID_HistoricalData, wrapper.getClient(), currentContract);
+                        wrapper.getBarsHistDataArrayList();
 
-                    Thread.sleep(10000);
-                    TimeUnit.SECONDS.sleep(5);
+                        newStrategy.executionDeterminer(currentSymbolFUT, wrapper.getBarsHistDataArrayList());
+                        String commandBs = newStrategy.executionDeterminer(currentSymbolFUT,wrapper.getBarsHistDataArrayList());
 
-                    if ("SELL".equals(commandBs)) {
-                        OOP.placeOrder(currentContract, OrderTypes.MarketOrder("SELL", 1));
+                        Thread.sleep(10000);
+                        TimeUnit.SECONDS.sleep(5);
+
+                        if ("SELL".equals(commandBs)) {
+                            OOP.placeOrder(currentContract, OrderTypes.MarketOrder("SELL", 1));
+                        }
+                        if ("BUY".equals(commandBs)) {
+                            OOP.placeOrder(currentContract, OrderTypes.MarketOrder("BUY", 1));
+                        }
+
+                        TimeUnit.SECONDS.sleep(5);
                     }
-                    if ("BUY".equals(commandBs)) {
-                        OOP.placeOrder(currentContract, OrderTypes.MarketOrder("BUY", 1));
-                    }
-
-                    TimeUnit.SECONDS.sleep(5);
                 }
-            }
             }
 ////    //********************************************************************************************************   
             /*Here at this point, we assume full capacity meaning 5 contracts are open--so we assess if unRealizedPNL meets our criteria for closing position.*/
@@ -196,7 +197,7 @@ public class Main_open {
                 if (wrapper.getBarsHistDataArrayList().size() != 0) {
                     TimeUnit.SECONDS.sleep(5);
                     ArrayList<Bar> incomingBarInput = wrapper.getBarsHistDataArrayList();
-                    String determinedDecision = newStrategy.executionDeterminer(incomingBarInput);
+                    String determinedDecision = newStrategy.executionDeterminer(strContract, incomingBarInput);
                     TimeUnit.SECONDS.sleep(4);
                     if ("BUY".equals(determinedDecision) || "SELL".equals(determinedDecision)) {
                         OOP.placeOrder(currentContract, OrderTypes.MarketOrder(determinedDecision, 1));
@@ -250,8 +251,9 @@ public class Main_open {
             EnforceToClose.clear();
 
 /////////////end - code to enforce margin quantity
-
             System.out.println("          ");
+            System.out.println("          ");
+            System.out.println("Timer   x =       " + x);
             System.out.println("          ");
             System.out.println("          ");
 
@@ -285,11 +287,11 @@ public class Main_open {
     }
 
     private static void updatePortfolioOperations(EClientSocket client) throws InterruptedException {
-        client.reqAccountUpdates(true, "DU9999999");
+        client.reqAccountUpdates(true, "DU999999");
         //! [reqaaccountupdates]
         Thread.sleep(5000);  //5 seconds
         //! [cancelaaccountupdates]
-        client.reqAccountUpdates(false, "DU9999999");
+        client.reqAccountUpdates(false, "DU999999");
         //! [cancelaaccountupdates]
         Thread.sleep(1000);
     }
@@ -412,7 +414,7 @@ client.reqHistoricalData(tickerId, contract, endDateTime, durationStr, barSizeSe
 
 //    private static void pnl(EClientSocket client) throws InterruptedException {
 //        //! [reqpnl]
-//        client.reqPnL(17001, "DU9999999", "");
+//        client.reqPnL(17001, "DU999999", "");
 //        //! [reqpnl]
 //        Thread.sleep(1000);
 //        //! [cancelpnl]
@@ -421,13 +423,11 @@ client.reqHistoricalData(tickerId, contract, endDateTime, durationStr, barSizeSe
 //    }
 //    private static void pnlSingle(EClientSocket client) throws InterruptedException {
 //        //! [reqpnlsingle]
-//        client.reqPnLSingle(17001, "DU9999999", "", 268084);
+//        client.reqPnLSingle(17001, "DU999999", "", 268084);
 //        //! [reqpnlsingle]
 //        Thread.sleep(1000);
 //        //! [cancelpnlsingle]
 //        client.cancelPnLSingle(17001);
 //        //! [cancelpnlsingle]
 //    }
-
-    
 }

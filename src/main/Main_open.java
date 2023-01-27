@@ -137,6 +137,7 @@ public class Main_open {
                         }
 
                         TimeUnit.SECONDS.sleep(5);
+                        wrapper.getBarsHistDataArrayList();
                     }
                 }
             }

@@ -67,7 +67,7 @@ public class NewStrategy {
                 b1 = 0;
             }
 
-            avgCurOpnPrvWAP = (barInput.get(b12).wap() * barInput.get(b12).close())/2.0;
+            avgCurOpnPrvWAP = (barInput.get(b12).wap() + barInput.get(b12).close())/2.0;
             tesla3 = 0.3 * ((avgCurOpnPrvWAP - barInput.get(b1).wap()) + (avgCurOpnPrvWAP - barInput.get(b2).wap()) + (avgCurOpnPrvWAP - barInput.get(b3).wap()) + (avgCurOpnPrvWAP - barInput.get(b4).wap()));
             tesla6 = 0.6 * ((avgCurOpnPrvWAP - barInput.get(b5).wap()) + (avgCurOpnPrvWAP - barInput.get(b6).wap()) + (avgCurOpnPrvWAP - barInput.get(b7).wap()) + (avgCurOpnPrvWAP - barInput.get(b8).wap()));
             tesla9 = 0.9 * ((avgCurOpnPrvWAP - barInput.get(b9).wap()) + (avgCurOpnPrvWAP - barInput.get(b10).wap()) + (avgCurOpnPrvWAP - barInput.get(b11).wap()) + (avgCurOpnPrvWAP - barInput.get(b12).wap()));

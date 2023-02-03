@@ -120,6 +120,7 @@ public class Main_open {
                         String currentSymbolFUT = activeContracts.get(cr).getSymbol();
                         int reqID_HistoricalData = activeContracts.get(cr).getHistData_ReqID();
                         TimeUnit.SECONDS.sleep(3);
+                        wrapper.getBarsHistDataArrayList().clear();
                         historicalDataMainOPERATIONS(reqID_HistoricalData, wrapper.getClient(), currentContract);
                         wrapper.getBarsHistDataArrayList();
 
@@ -137,7 +138,7 @@ public class Main_open {
                         }
 
                         TimeUnit.SECONDS.sleep(5);
-                        wrapper.getBarsHistDataArrayList();
+                        wrapper.getBarsHistDataArrayList().clear();
                     }
                 }
             }
@@ -146,6 +147,7 @@ public class Main_open {
 
             System.out.println("'Full' Capacity if eligible | Portfolio Assessment | unRealizedPNL actualization");
 
+            wrapper.getHashMap_UpdatePortfolio().clear();
             updatePortfolioOperations(wrapper.getClient());
             wrapper.getHashMap_UpdatePortfolio();
             portfolioAssessment.portfolioAssessMethod(wrapper.getHashMap_UpdatePortfolio());
@@ -180,7 +182,7 @@ public class Main_open {
 
 //------- This portion of code opens positions if zero positions exist.
             System.out.println("Above/BelowCapacity - Zero positions checker/OPENER  ");
-
+            wrapper.getPositions().clear();
             positionStatusOperations(wrapper.getClient());
             wrapper.getPositions();
             ArrayList<String> toOpen = new ArrayList<>();
@@ -193,6 +195,7 @@ public class Main_open {
                 Contract currentContract = portfolioVault.get(strContract).getContract();
                 int reqID_HistoricalData = portfolioVault.get(strContract).getHistData_ReqID();
                 TimeUnit.SECONDS.sleep(3);
+                wrapper.getBarsHistDataArrayList().clear();
                 historicalDataMainOPERATIONS(reqID_HistoricalData, wrapper.getClient(), currentContract);
                 TimeUnit.SECONDS.sleep(5);
                 if (wrapper.getBarsHistDataArrayList().size() != 0) {
@@ -213,6 +216,7 @@ public class Main_open {
 //////Here at this point, code to enforce limit on number of open positions due to margin requirement  - begin
 /////////////code to enforce margin quantity  - begin
             System.out.println("Above/BelowCapacity | Margin considerations | Margin qty enforcer ");
+            wrapper.getPositions().clear();
             positionStatusOperations(wrapper.getClient());
             wrapper.getPositions();
             HashMap<String, Double> currPostionsHashMap = new HashMap<>();
